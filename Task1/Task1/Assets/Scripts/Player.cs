@@ -10,14 +10,11 @@ public class Player : MonoBehaviour, IDamageable
 
     private bool isDead = false;
 
-    protected void Start()
+    public void Start()
     {
         health = maxHealth;
 
-        if (youDiedUI != null)
-        {
-            youDiedUI.SetActive(false);
-        }
+        youDiedUI.SetActive(false);
     }
 
     // Hapus pengecekan di Update, cukup di TakeDamage saja
@@ -47,11 +44,6 @@ public class Player : MonoBehaviour, IDamageable
         if (isDead) return;  // prevent multiple calls
         isDead = true;
 
-        if (youDiedUI != null)
-        {
-            youDiedUI.SetActive(true);
-        }
-
         var playerMovement = GetComponent<PlayerMovement>();
         if (playerMovement != null)
         {
@@ -63,7 +55,8 @@ public class Player : MonoBehaviour, IDamageable
         {
             shootFireball.enabled = false;
         }
-
+        youDiedUI.SetActive(true);
+        Time.timeScale = 0f;
         Debug.Log("Player mati!");
     }
 }

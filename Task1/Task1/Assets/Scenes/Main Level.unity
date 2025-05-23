@@ -818,6 +818,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &602661247 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5634706971088387186, guid: 2d6f04a7dd3781744bce5afb6abe0cc5, type: 3}
+  m_PrefabInstance: {fileID: 395745880135737545}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &604283204
 GameObject:
   m_ObjectHideFlags: 0
@@ -1276,7 +1281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  youDiedUI: {fileID: 5634706971088387186, guid: 2d6f04a7dd3781744bce5afb6abe0cc5, type: 3}
+  youDiedUI: {fileID: 602661247}
 --- !u!114 &998500409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2231,7 +2236,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5634706971088387186, guid: 2d6f04a7dd3781744bce5afb6abe0cc5, type: 3}
       propertyPath: m_Name
-      value: Canvas
+      value: YouDiedUI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
