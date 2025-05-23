@@ -31,6 +31,9 @@ public class EnemyFireball : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.CompareTag("Enemy"))
+            return;
+
         var target = other.GetComponent<IDamageable>();
         if (target != null)
         {
@@ -38,4 +41,6 @@ public class EnemyFireball : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+
 }

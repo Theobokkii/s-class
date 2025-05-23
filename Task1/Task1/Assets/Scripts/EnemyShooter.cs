@@ -23,10 +23,13 @@ public class EnemyShooter : MonoBehaviour
                 Vector2 shootDir = direction.x > 0 ? Vector2.right : Vector2.left;
                 float zRotation = direction.x > 0 ? 0f : 180f;
 
-                // Spawn fireball
-                GameObject fireball = Instantiate(fireballPrefab, transform.position, Quaternion.Euler(0, 0, zRotation));
+                // Offset posisi spawn fireball supaya tidak overlap dengan musuh
+                Vector3 spawnPos = transform.position + (Vector3)(shootDir * 1.2f);
+
+                GameObject fireball = Instantiate(fireballPrefab, spawnPos, Quaternion.Euler(0, 0, zRotation));
                 fireball.GetComponent<EnemyFireball>().SetDirection(shootDir);
             }
         }
     }
+
 }

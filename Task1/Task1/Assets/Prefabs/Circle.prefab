@@ -162,9 +162,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d8babfcf057217459fa262fcb12e6dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireballSpeed: 5
-  damage: 3
-  graceDuration: 10
+  speed: 5
+  damage: 10
+  lifetime: 3
 --- !u!114 &8732656447089489605
 MonoBehaviour:
   m_ObjectHideFlags: 0

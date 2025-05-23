@@ -7,6 +7,8 @@ public class Enemy : MonoBehaviour, IDamageable
 {
     public float health {get;set;}
     public float maxHealth;
+    private bool isDead = false;
+
 
     private void Start()
     {
@@ -15,8 +17,10 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
+        if (isDead) return;  // Jika sudah mati, ignore damage berikutnya
+
         health -= damage;
-        Debug.Log("Player kena damage. Sisa: " + health);
+        Debug.Log("Enemy kena damage. Sisa: " + health);
     }
 
     void Update()
