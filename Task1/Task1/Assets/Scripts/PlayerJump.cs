@@ -2,45 +2,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerJump : Player{
-    public float jumpForce;          // Kekuatan lompat
-    public bool isGrounded;          // Menyatakan apakah karakter berada di tanah
-    public int totalJump;            // Total lompatan yang diperbolehkan (misalnya 2 untuk double jump)
-    private Rigidbody2D rb;          // Komponen Rigidbody2D untuk fisika
-    [HideInInspector] public int currentTotalJump;  // Jumlah lompatan yang telah dilakukan
+public class PlayerJump : MonoBehaviour
+{
+    private Player player;
+    public float jumpForce = 5f;
+    public Transform groundCheck;
+    public float groundCheckRadius = 0.2f;
+    public LayerMask groundLayer;
+    private Rigidbody2D rb;
+    private bool isGrounded;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        player = GetComponent<Player>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && currentTotalJump < totalJump)
+        CheckGround();
+
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            // Lompat jika berada di tanah atau belum mencapai total lompatan
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            currentTotalJump++;
+            Jump();
+        }
+        Debug.Log("isGrounded = " + isGrounded);
+
+    }
+
+    private void Jump()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, 0f); // Reset vertical speed biar konsisten
+        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+    }
+
+    private void CheckGround()
+    {
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (groundCheck != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
     }
 
-    // Menangani deteksi apakah pemain ada di tanah
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))  // Pastikan objek tanah memiliki tag "Ground"
-        {
-            isGrounded = true;
-            currentTotalJump = 0;  // Reset lompatan ketika menyentuh tanah
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = false;
-        }
-    }
 }

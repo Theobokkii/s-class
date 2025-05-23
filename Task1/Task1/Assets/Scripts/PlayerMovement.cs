@@ -2,50 +2,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : Player
+public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed;        // Kecepatan bergerak
-    public float rotationSpeed;    // Kecepatan rotasi
-    public float maxSpeed;         // Kecepatan maksimum
-    private Camera cam;            // Kamera utama
-    private Rigidbody2D rb;        // Rigidbody 2D untuk pergerakan berbasis fisika
-    [HideInInspector] public Vector2 moveDirection;  // Arah pergerakan
+    private Player player;
+    public float moveSpeed = 10f;        // Kekuatan dorongan horizontal
+    public float rotationSpeed = 10f;    // Kecepatan rotasi saat berbalik
+    public float maxSpeed = 5f;          // Kecepatan maksimum
+    private Camera cam;                  // Kamera utama
+    private Rigidbody2D rb;              // Rigidbody2D untuk fisika
+
+    [HideInInspector] public float moveDirection;  // Arah input horizontal (-1, 0, 1)
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        cam = Camera.main.GetComponent<Camera>();
+        cam = Camera.main;
+        player = GetComponent<Player>();
     }
 
     private void Update()
     {
-        // Input horizontal untuk gerakan
-        float horizontal = Input.GetAxis("Horizontal");
-        moveDirection = new Vector2(horizontal, 0f).normalized; // Tidak ada gerakan vertikal
+        // Ambil input horizontal (A/D atau panah kiri/kanan)
+        moveDirection = Input.GetAxisRaw("Horizontal"); // Lebih responsif daripada GetAxis
     }
 
     private void FixedUpdate()
     {
-        // Batasi kecepatan horizontal agar tidak lebih dari maxSpeed
+        // Tambahkan gaya horizontal
+        rb.AddForce(new Vector2(moveDirection * moveSpeed, 0f));
+
+        // Batasi kecepatan horizontal maksimum
         if (rb.velocity.x > maxSpeed)
         {
-            rb.velocity = new Vector2(maxSpeed, rb.velocity.y); // Hanya batasi kecepatan horizontal
+            rb.velocity = new Vector2(maxSpeed, rb.velocity.y);
         }
         else if (rb.velocity.x < -maxSpeed)
         {
-            rb.velocity = new Vector2(-maxSpeed, rb.velocity.y); // Batasi kecepatan negatif horizontal
+            rb.velocity = new Vector2(-maxSpeed, rb.velocity.y);
         }
 
-        // Set kecepatan horizontal berdasarkan arah gerakan
-        Vector2 currentVelocity = rb.velocity;
-        rb.velocity = new Vector2(moveDirection.x * moveSpeed, currentVelocity.y); // Tidak ada perubahan vertikal
-
-        // Rotasi karakter mengikuti arah gerakan
-        if (moveDirection.x != 0)
+        // Rotasi karakter mengikuti arah gerak
+        if (moveDirection != 0)
         {
-            float targetAngle = moveDirection.x > 0 ? 0f : 180f;
-            float angle = Mathf.LerpAngle(transform.eulerAngles.z, targetAngle, rotationSpeed * Time.deltaTime);
-            transform.rotation = Quaternion.Euler(0f, 0f, angle);
+            Vector3 scale = transform.localScale;
+            scale.x = Mathf.Abs(scale.x) * (moveDirection > 0 ? 1 : -1);
+            transform.localScale = scale;
         }
     }
 }
