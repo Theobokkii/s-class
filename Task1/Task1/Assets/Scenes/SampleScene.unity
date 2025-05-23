@@ -1241,8 +1241,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f41cea110efc70f49b0837c9a2087fe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  youDiedUI: {fileID: 0}
   moveSpeed: 20
   rotationSpeed: 0
   maxSpeed: 20
@@ -1259,8 +1257,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70dbf77b94281f844b9b88e4da0e2776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
-  youDiedUI: {fileID: 0}
   jumpForce: 10
   groundCheck: {fileID: 604283205}
   groundCheckRadius: 0.2
@@ -1293,8 +1289,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6c5df07657481441ae617fc2d681092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
-  youDiedUI: {fileID: 0}
   dashDistance: 4
   dashCooldown: 1
 --- !u!95 &998500410
